@@ -41,6 +41,11 @@ $border-gray: #bfbfbf;
       display: block;
       width: 800px;
     }
+    .img-header {
+      width: 800px;
+      height: 200px;
+      object-fit: fill;
+    }
     ul {
       padding-inline-start: 0;
       list-style: none;

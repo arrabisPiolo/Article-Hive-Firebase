@@ -1,12 +1,15 @@
 import { useState, useContext } from "react";
 
 import FormInput from "../form-input/form-input";
-
+import logo from "../../assets/welcome-logo1.png";
+import logo1 from "../../assets/article-hive-logo1.png";
 import { UserContext } from "../context/user.context";
 
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
+  createUserDocumentFromAuth,
+  signInWithGitHubPopUp,
 } from "../../utils/firebase/firebase.utils";
 
 import "./log-in-form.scss";
@@ -31,6 +34,17 @@ const LogIn = () => {
   const signInWithGoogle = async () => {
     try {
       const { user } = await signInWithGooglePopup();
+      await createUserDocumentFromAuth(user);
+      setCurrentUser(user);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const signInWithGithub = async () => {
+    try {
+      const { user } = await signInWithGitHubPopUp();
+      await createUserDocumentFromAuth(user);
       setCurrentUser(user);
       navigate("/");
     } catch (error) {
@@ -70,38 +84,64 @@ const LogIn = () => {
   };
 
   return (
-    <div className="sign-in-container">
-      <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
-      <form onSubmit={handleSubmit}>
-        <FormInput
-          label="Email"
-          inputProps={{
-            type: "email",
-            required: true,
-            name: "email",
-            value: email,
-            onChange: handleChange,
-          }}
-        />
+    <div className="login-container">
+      <div className="welcome-logo-container">
+        <img src={logo} alt="" />
+      </div>
 
-        <FormInput
-          label="Password"
-          inputProps={{
-            type: "password",
-            required: true,
-            name: "password",
-            value: password,
-            onChange: handleChange,
-          }}
-        />
+      <div className="sign-in-container">
+        <img className="beehive" src={logo1} alt="" />
+        <h2>Already have an account?</h2>
+        <span>Sign in with your email and password</span>
+        <form onSubmit={handleSubmit}>
+          <FormInput
+            label="Email"
+            inputProps={{
+              type: "email",
+              required: true,
+              name: "email",
+              value: email,
+              onChange: handleChange,
+            }}
+          />
+
+          <FormInput
+            label="Password"
+            inputProps={{
+              type: "password",
+              required: true,
+              name: "password",
+              value: password,
+              onChange: handleChange,
+            }}
+          />
+          <button className="signin-btn" type="submit">
+            Sign In
+          </button>
+          <div className="divider">
+            <p className="text-center">OR</p>
+          </div>
+        </form>
+
         <div className="buttons-container">
-          <button type="submit">Sign In</button>
-          <button type="button" onClick={signInWithGoogle}>
+          <button
+            type="button"
+            className="button google"
+            onClick={signInWithGoogle}
+          >
+            <span className="button-icon"></span>
             Sign In With Google
           </button>
+          <button
+            type="button"
+            className="button github"
+            onClick={signInWithGithub}
+          >
+            <span className="button-icon"></span>
+            Sign in with GitHub
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

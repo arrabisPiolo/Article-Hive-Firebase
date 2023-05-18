@@ -111,8 +111,8 @@ export const signOutUser = async () => await signOut(auth);
 //   }
 // };
 
-export const SampleData = async (data) => {
-  const postRef = doc(db, "posts", "user2");
+export const SampleData = async (userId, data) => {
+  const postRef = doc(db, "posts", userId);
 
   try {
     // Try to get the document first to check if it exists

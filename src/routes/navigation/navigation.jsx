@@ -20,7 +20,7 @@ const Navigation = () => {
         <div className="navigation-container">
           <div className="logo-container">
             <Link to="/">
-              <p>DEV COMMUNITY</p>
+              <img className="nav-logo" src="/article-hive-low.png" alt="" />
             </Link>
           </div>
           <div className="navlinks-container">

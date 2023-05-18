@@ -5,6 +5,7 @@ import { UserContext } from "../context/user.context";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
@@ -102,6 +103,7 @@ const SignUpform = () => {
           }}
         />
         <button type="submit">Sign up</button>
+        <button onClick={signInWithGooglePopup}>Sign Up using google</button>
       </form>
     </div>
   );

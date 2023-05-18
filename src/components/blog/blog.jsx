@@ -11,11 +11,17 @@ const Blog = () => {
   const [showForm, setShowForm] = useState(false);
   const [dataArray, setDataArray] = useState([]);
   const { setContents } = useContext(ContentContext);
+  const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
   const handleClick = () => {
-    setShowForm(!showForm);
-    navigate("/create-post");
+    if (currentUser) {
+      setShowForm(!showForm);
+      navigate("/create-post");
+    } else {
+      alert("Please Login to Create Post");
+    }
   };
+  console.log(currentUser);
 
   // useEffect(() => {
   //   setDataArray(contents.dataArray);
@@ -59,7 +65,7 @@ const Blog = () => {
 
     getDataArray();
   }, []);
-
+  const sortedDataArray = dataArray.sort((a, b) => b.id - a.id);
   return (
     <div className="div-container">
       <div className="blog-container">
@@ -72,25 +78,25 @@ const Blog = () => {
         {showForm && <CreatePostForm />}
         <div>
           <ul>
-            {dataArray
-              .slice()
-              .reverse()
-              .map(({ id, title, content }) => {
-                return (
-                  <li key={id}>
-                    <div className="post">
-                      <span className="title">{title}</span>
-                      <p className="content">{content}</p>
-                      <button
-                        className="btn-view"
-                        onClick={() => navigate(`/post/${id}`)}
-                      >
-                        View
-                      </button>
-                    </div>
-                  </li>
-                );
-              })}
+            {sortedDataArray.map(({ id, title, content, imageUrl }) => {
+              return (
+                <li key={id}>
+                  <div className="post">
+                    <span className="title">{title}</span>
+                    {imageUrl && (
+                      <img src={imageUrl} alt={title} className="img-header" />
+                    )}
+                    <p className="content">{content}</p>
+                    <button
+                      className="btn-view"
+                      onClick={() => navigate(`/post/${id}`)}
+                    >
+                      View
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
