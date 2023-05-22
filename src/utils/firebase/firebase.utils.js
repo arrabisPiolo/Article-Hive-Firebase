@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   createUserWithEmailAndPassword,
+  updateProfile,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -54,9 +55,8 @@ export const createUserDocumentFromAuth = async (
   if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
 
-  console.log(userDocRef);
   const userSnapshot = await getDoc(userDocRef);
-  console.log(userSnapshot);
+
   console.log(userSnapshot.exists());
 
   if (!userSnapshot.exists()) {
@@ -78,10 +78,23 @@ export const createUserDocumentFromAuth = async (
   return userDocRef;
 };
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (
+  email,
+  password,
+  displayName
+) => {
   if (!email || !password) return;
 
-  return await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  // Set the display name for the user
+  await updateProfile(userCredential.user, { displayName });
+
+  return userCredential;
 };
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
@@ -132,6 +145,25 @@ export const SampleData = async (userId, data) => {
   } catch (e) {
     console.error("Error adding document: ", e);
   }
+};
+
+export const GetDataArray = async () => {
+  const docRefs = await getDocs(collection(db, "posts"));
+  const ids = docRefs.docs.map((doc) => doc.id);
+  const dataArray = [];
+  for (const id of ids) {
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      if (data && Array.isArray(data.dataArray)) {
+        dataArray.push(...data.dataArray);
+      }
+    } else {
+      console.log(`No such document with ID ${id}!`);
+    }
+  }
+  return dataArray;
 };
 
 // export const SampleData = async (data) => {

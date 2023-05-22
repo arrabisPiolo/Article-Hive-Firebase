@@ -1,5 +1,41 @@
 .sign-up-container {
+  height: calc(100vh - 71px);
   display: flex;
-  flex-direction: column;
-  width: 380px;
+  justify-content: center;
+  align-items: center;
+
+  .sign-up-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(203, 203, 203);
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+
+    padding: 40px 80px;
+    background-color: #ffff;
+    .beehive {
+      width: 200px;
+      height: auto;
+    }
+    .sign-up-form-text {
+      font-size: 20px;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0px;
+      .text-center {
+        margin: 0px 12px;
+      }
+      &::after,
+      &:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #878484;
+      }
+    }
+  }
 }

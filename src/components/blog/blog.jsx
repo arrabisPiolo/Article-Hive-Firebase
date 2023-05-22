@@ -2,14 +2,19 @@ import React, { useState, useContext, useEffect } from "react";
 import CreatePostForm from "./create-post-form";
 import { ContentContext } from "../context/content.context";
 import { UserContext } from "../context/user.context";
+import { GetDataArray } from "../../utils/firebase/firebase.utils";
+
 import { useNavigate } from "react-router-dom";
 import "./blog.scss";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/firebase/firebase.utils";
+
+import SearchBar from "./search-bar";
+import PostItem from "./post-item";
 
 const Blog = () => {
   const [showForm, setShowForm] = useState(false);
   const [dataArray, setDataArray] = useState([]);
+  const [searchField, setSearchField] = useState("");
+  const [filteredDataArray, setFilteredDataArray] = useState([]);
   const { setContents } = useContext(ContentContext);
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -21,84 +26,66 @@ const Blog = () => {
       alert("Please Login to Create Post");
     }
   };
-  console.log(currentUser);
 
-  // useEffect(() => {
-  //   setDataArray(contents.dataArray);
-  // }, [contents.dataArray]);
-
-  // useEffect(() => {
-  //   const getDataArray = async () => {
-  //     const docRef = doc(db, "posts", "user1");
-  //     const docSnap = await getDoc(docRef);
-  //     if (docSnap.exists()) {
-  //       setDataArray(docSnap.data().dataArray);
-  //     } else {
-  //       console.log("No such document!");
-  //     }
-  //   };
-
-  //   getDataArray();
-  // }, []);
-
-  console.log(dataArray);
   useEffect(() => {
-    const getDataArray = async () => {
-      const docRefs = await getDocs(collection(db, "posts"));
-      const ids = docRefs.docs.map((doc) => doc.id);
-      const dataArray = [];
-      for (const id of ids) {
-        const docRef = doc(db, "posts", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          if (data && Array.isArray(data.dataArray)) {
-            dataArray.push(...data.dataArray);
-          }
-        } else {
-          console.log(`No such document with ID ${id}!`);
-        }
-      }
+    const fetchData = async () => {
+      const dataArray = await GetDataArray();
       setDataArray(dataArray);
       setContents(dataArray);
+      setFilteredDataArray(dataArray);
     };
-
-    getDataArray();
+    return fetchData;
   }, []);
-  const sortedDataArray = dataArray.sort((a, b) => b.id - a.id);
+
+  const handleSearch = () => {
+    const searchFieldValue = searchField.toLowerCase();
+    const filteredArray = dataArray.filter((item) =>
+      item.title.toLowerCase().includes(searchFieldValue)
+    );
+    if (searchFieldValue.trim() === "") {
+      alert("Please enter a search term");
+    } else if (filteredArray.length === 0) {
+      alert("No results found for the search term");
+    } else {
+      alert(`Found ${filteredArray.length} result(s) for the search term`);
+    }
+    setFilteredDataArray(filteredArray);
+  };
+
+  const sortedDataArray = filteredDataArray.sort((a, b) => b.id - a.id);
+  console.log(sortedDataArray);
   return (
-    <div className="div-container">
-      <div className="blog-container">
-        <div className="header">
-          <h1>POSTS</h1>
-          <span className="create-post" onClick={handleClick}>
-            Create Post
-          </span>
-        </div>
-        {showForm && <CreatePostForm />}
-        <div>
-          <ul>
-            {sortedDataArray.map(({ id, title, content, imageUrl }) => {
-              return (
-                <li key={id}>
-                  <div className="post">
-                    <span className="title">{title}</span>
-                    {imageUrl && (
-                      <img src={imageUrl} alt={title} className="img-header" />
-                    )}
-                    <p className="content">{content}</p>
-                    <button
-                      className="btn-view"
-                      onClick={() => navigate(`/post/${id}`)}
-                    >
-                      View
-                    </button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+    <div className="blog-container">
+      <SearchBar
+        searchField={searchField}
+        setSearchField={setSearchField}
+        handleSearch={handleSearch}
+      />
+      <div className="header">
+        <h1>POSTS</h1>
+        <span className="create-post" onClick={handleClick}>
+          Create Post
+        </span>
+      </div>
+      {showForm && <CreatePostForm />}
+      <div>
+        <ul>
+          {sortedDataArray.map(
+            ({ id, authoruid, photoURL, author, title, content, imageUrl }) => (
+              <PostItem
+                key={id}
+                id={id}
+                authoruid={authoruid}
+                photoURL={photoURL}
+                author={author}
+                title={title}
+                content={content}
+                imageUrl={imageUrl}
+                navigate={navigate}
+              />
+            )
+          )}
+        </ul>
       </div>
     </div>
   );

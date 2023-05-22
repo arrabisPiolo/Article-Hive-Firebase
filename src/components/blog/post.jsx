@@ -11,7 +11,7 @@ const Post = () => {
   if (!post) {
     return <div>Post not found</div>; // handle case where post is not found
   }
-
+  console.log(contents);
   return (
     <>
       <div className="post-container">

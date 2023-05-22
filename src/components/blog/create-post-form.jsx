@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { ContentContext } from "../context/content.context";
+
 import { UserContext } from "../context/user.context";
 import { useNavigate } from "react-router-dom";
 import { SampleData } from "../../utils/firebase/firebase.utils";
@@ -7,7 +7,6 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "./create-post-form.styles.scss";
 
 const CreatePostForm = () => {
-  const { setContents } = useContext(ContentContext);
   const { currentUser } = useContext(UserContext);
   const [postText, setPostText] = useState("");
   const [postTitle, setPostTitle] = useState("");
@@ -26,10 +25,15 @@ const CreatePostForm = () => {
       await uploadBytes(storageRef, imageFile);
       imageUrl = await getDownloadURL(storageRef);
     }
+
+    const DEFAULT_PROFILE_PICTURE_PATH = "/default-profile.png";
     const newPost = {
       id: Date.now() + 1,
       title: postTitle,
+      author: currentUser.displayName,
+      photoURL: currentUser.photoURL || DEFAULT_PROFILE_PICTURE_PATH,
       content: postText,
+      authoruid: currentUser.uid,
       imageUrl,
     };
 

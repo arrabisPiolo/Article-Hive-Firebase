@@ -30,7 +30,7 @@ const Navigation = () => {
 
             {currentUser ? (
               <Link className="nav-link" onClick={signOutHandler}>
-                SIGN OUT
+                Sign Out
               </Link>
             ) : (
               <>
@@ -38,8 +38,8 @@ const Navigation = () => {
                   Log In
                 </Link>
 
-                <Link className="nav-link" to="/sign-in">
-                  SIGN UP
+                <Link className="nav-link" to="/sign-up">
+                  Sign Up
                 </Link>
               </>
             )}

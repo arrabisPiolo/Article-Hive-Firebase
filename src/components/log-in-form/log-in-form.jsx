@@ -1,5 +1,8 @@
 import { useState, useContext } from "react";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import FormInput from "../form-input/form-input";
 import logo from "../../assets/welcome-logo1.png";
 import logo1 from "../../assets/article-hive-logo1.png";
@@ -13,6 +16,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import "./log-in-form.scss";
+import "../../buttons.scss";
 import { useNavigate } from "react-router-dom";
 
 const defaultFormFields = {
@@ -31,23 +35,15 @@ const LogIn = () => {
     setFormFields(defaultFormFields);
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithProvider = async (signInFunction) => {
     try {
-      const { user } = await signInWithGooglePopup();
+      const { user } = await signInFunction();
       await createUserDocumentFromAuth(user);
       setCurrentUser(user);
       navigate("/");
+      toast.success("Signed In Successfully");
     } catch (error) {
-      console.log(error);
-    }
-  };
-  const signInWithGithub = async () => {
-    try {
-      const { user } = await signInWithGitHubPopUp();
-      await createUserDocumentFromAuth(user);
-      setCurrentUser(user);
-      navigate("/");
-    } catch (error) {
+      toast.error("Error Signing In");
       console.log(error);
     }
   };
@@ -62,6 +58,7 @@ const LogIn = () => {
       );
       setCurrentUser(user);
       resetFormFields();
+      toast.success("Signed In Successfully");
       navigate("/");
     } catch (error) {
       switch (error.code) {
@@ -71,6 +68,7 @@ const LogIn = () => {
         case "auth/user-not-found":
           alert("no user accociated with this email");
           break;
+
         default:
           console.log(error);
       }
@@ -118,6 +116,9 @@ const LogIn = () => {
           <button className="signin-btn" type="submit">
             Sign In
           </button>
+          <p className="signup-link">
+            Don't have an account? <a href="/sign-up">Sign Up</a>
+          </p>
           <div className="divider">
             <p className="text-center">OR</p>
           </div>
@@ -127,7 +128,9 @@ const LogIn = () => {
           <button
             type="button"
             className="button google"
-            onClick={signInWithGoogle}
+            onClick={() => {
+              signInWithProvider(signInWithGooglePopup);
+            }}
           >
             <span className="button-icon"></span>
             Sign In With Google
@@ -135,7 +138,9 @@ const LogIn = () => {
           <button
             type="button"
             className="button github"
-            onClick={signInWithGithub}
+            onClick={() => {
+              signInWithProvider(signInWithGitHubPopUp);
+            }}
           >
             <span className="button-icon"></span>
             Sign in with GitHub

@@ -10,72 +10,86 @@ $border-gray: #bfbfbf;
   padding: 10px;
 }
 
-.div-container {
+.blog-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-
-  .blog-container {
+  align-items: center;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 800px;
+    height: auto;
+    border-bottom: 1px solid gray;
+
+    .create-post {
+      @include new-button;
+
+      width: 105px;
+    }
+  }
+  .user-profile-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .img-header {
+    width: 800px;
+    height: 200px;
+    object-fit: fill;
+  }
+  ul {
+    padding-inline-start: 0;
+    list-style: none;
+  }
+  .post {
+    border: 1px solid $border-gray;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      height: auto;
-      border-bottom: 1px solid gray;
+    background-color: white;
 
-      .create-post {
-        @include new-button;
-
-        width: 105px;
+    .profile {
+      width: 40px;
+      border-radius: 50%;
+    }
+    .btn-view {
+      align-self: flex-end;
+      @include new-button;
+      font-size: 1rem;
+      &:hover {
+        background-color: #5671f6;
       }
     }
-    .title {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid $border-gray;
-      height: 40px;
-      display: block;
-      width: 800px;
-    }
-    .img-header {
-      width: 800px;
-      height: 200px;
-      object-fit: fill;
-    }
-    ul {
-      padding-inline-start: 0;
-      list-style: none;
-    }
-    .post {
-      border: 1px solid $border-gray;
-      border-radius: 5px;
-      padding: 10px;
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
-      background-color: white;
-      .btn-view {
-        align-self: flex-end;
-        @include new-button;
-        font-size: 1rem;
-        &:hover {
-          background-color: #5671f6;
-        }
-      }
-    }
+  }
+  .content-container {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid $border-gray;
+    height: 90px;
+    width: 800px;
     .content {
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid $border-gray;
-      height: 80px;
-      width: 800px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    }
+
+    .container {
+      width: 300px;
+      height: 100px;
+      overflow: hidden;
+      background-color: #5e4f42;
+      margin: 0 auto;
+    }
+    .paragraph {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
     }
   }
 }
