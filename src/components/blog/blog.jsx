@@ -15,7 +15,7 @@ const Blog = () => {
   const [dataArray, setDataArray] = useState([]);
   const [searchField, setSearchField] = useState("");
   const [filteredDataArray, setFilteredDataArray] = useState([]);
-  const { setContents } = useContext(ContentContext);
+  const { contents, setContents } = useContext(ContentContext);
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
   const handleClick = () => {
@@ -34,7 +34,7 @@ const Blog = () => {
       setContents(dataArray);
       setFilteredDataArray(dataArray);
     };
-    return fetchData;
+    fetchData();
   }, []);
 
   const handleSearch = () => {
@@ -43,17 +43,18 @@ const Blog = () => {
       item.title.toLowerCase().includes(searchFieldValue)
     );
     if (searchFieldValue.trim() === "") {
-      alert("Please enter a search term");
+      setFilteredDataArray(dataArray); // Update filtered array to contain all items
     } else if (filteredArray.length === 0) {
       alert("No results found for the search term");
     } else {
       alert(`Found ${filteredArray.length} result(s) for the search term`);
     }
-    setFilteredDataArray(filteredArray);
+    setFilteredDataArray(filteredArray); // Update filtered array with the filtered results
   };
 
   const sortedDataArray = filteredDataArray.sort((a, b) => b.id - a.id);
-  console.log(sortedDataArray);
+  console.log(contents);
+
   return (
     <div className="blog-container">
       <SearchBar
@@ -63,30 +64,56 @@ const Blog = () => {
       />
       <div className="header">
         <h1>POSTS</h1>
-        <span className="create-post" onClick={handleClick}>
+        {/* <span className="create-post" onClick={handleClick}>
           Create Post
-        </span>
+        </span> */}
+
+        {currentUser ? (
+          <button className="create-post blue" onClick={handleClick}>
+            <i className="fas fa-pencil-alt"></i> Create Post
+          </button>
+        ) : (
+          <button className="create-post" onClick={handleClick}>
+            <i className="fas fa-lock"></i> Create Post
+          </button>
+        )}
       </div>
       {showForm && <CreatePostForm />}
-      <div>
-        <ul>
-          {sortedDataArray.map(
-            ({ id, authoruid, photoURL, author, title, content, imageUrl }) => (
-              <PostItem
-                key={id}
-                id={id}
-                authoruid={authoruid}
-                photoURL={photoURL}
-                author={author}
-                title={title}
-                content={content}
-                imageUrl={imageUrl}
-                navigate={navigate}
-              />
-            )
-          )}
-        </ul>
-      </div>
+
+      {filteredDataArray.length === 0 ? (
+        <div>No posts found</div>
+      ) : (
+        <div className="posts-container">
+          <ul>
+            {sortedDataArray.map(
+              ({
+                id,
+                authoruid,
+                photoURL,
+                author,
+                title,
+                content,
+                imageUrl,
+                createdAt,
+                formattedDate,
+              }) => (
+                <PostItem
+                  key={id}
+                  id={id}
+                  authoruid={authoruid}
+                  photoURL={photoURL}
+                  author={author}
+                  title={title}
+                  content={content}
+                  imageUrl={imageUrl}
+                  createdAt={createdAt}
+                  formattedDate={formattedDate}
+                />
+              )
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

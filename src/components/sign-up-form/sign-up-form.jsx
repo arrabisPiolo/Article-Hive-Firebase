@@ -1,9 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import logo1 from "../../assets/article-hive-logo1.png";
 import "./sign-up-form.scss";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 import FormInput from "../form-input/form-input";
-import { UserContext } from "../context/user.context";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -21,12 +23,10 @@ const defaultFormFields = {
 const SignUpform = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
+  const navigate = useNavigate();
   const resetFeilds = () => {
     setFormFields(defaultFormFields);
   };
-
-  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -42,8 +42,7 @@ const SignUpform = () => {
       );
 
       await createUserDocumentFromAuth(user, { displayName });
-      setCurrentUser(user);
-
+      navigate("/");
       resetFeilds();
     } catch (error) {
       switch (error.code) {
@@ -59,13 +58,11 @@ const SignUpform = () => {
     }
   };
 
-  console.log(currentUser);
-
   const signInWithProvider = async (signInFunction) => {
     try {
       const { user } = await signInFunction();
       await createUserDocumentFromAuth(user);
-      setCurrentUser(user);
+
       navigate("/");
       toast.success("Signed In Successfully");
     } catch (error) {

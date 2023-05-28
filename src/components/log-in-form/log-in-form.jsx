@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import FormInput from "../form-input/form-input";
 import logo from "../../assets/welcome-logo1.png";
 import logo1 from "../../assets/article-hive-logo1.png";
-import { UserContext } from "../context/user.context";
 
 import {
   signInAuthUserWithEmailAndPassword,
@@ -29,8 +28,6 @@ const LogIn = () => {
   const { email, password } = formFields;
   const navigate = useNavigate();
 
-  const { setCurrentUser } = useContext(UserContext);
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -39,7 +36,7 @@ const LogIn = () => {
     try {
       const { user } = await signInFunction();
       await createUserDocumentFromAuth(user);
-      setCurrentUser(user);
+
       navigate("/");
       toast.success("Signed In Successfully");
     } catch (error) {
@@ -56,7 +53,7 @@ const LogIn = () => {
         email,
         password
       );
-      setCurrentUser(user);
+
       resetFormFields();
       toast.success("Signed In Successfully");
       navigate("/");

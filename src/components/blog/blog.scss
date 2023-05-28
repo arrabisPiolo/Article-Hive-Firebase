@@ -2,8 +2,8 @@ $border-gray: #bfbfbf;
 
 @mixin new-button {
   height: auto;
-  background-color: #2a4cf6;
-  color: white;
+  background-color: lightgrey;
+  color: rgb(46, 46, 46);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -15,81 +15,29 @@ $border-gray: #bfbfbf;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 800px;
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 800px;
+    width: 100%;
     height: auto;
     border-bottom: 1px solid gray;
-
     .create-post {
       @include new-button;
-
-      width: 105px;
-    }
-  }
-  .user-profile-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .img-header {
-    width: 800px;
-    height: 200px;
-    object-fit: fill;
-  }
-  ul {
-    padding-inline-start: 0;
-    list-style: none;
-  }
-  .post {
-    border: 1px solid $border-gray;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-
-    .profile {
-      width: 40px;
-      border-radius: 50%;
-    }
-    .btn-view {
-      align-self: flex-end;
-      @include new-button;
-      font-size: 1rem;
-      &:hover {
-        background-color: #5671f6;
+      width: 130px;
+      i {
+        margin-right: 5px;
       }
     }
-  }
-  .content-container {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid $border-gray;
-    height: 90px;
-    width: 800px;
-    .content {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      overflow: hidden;
-    }
-
-    .container {
-      width: 300px;
-      height: 100px;
-      overflow: hidden;
-      background-color: #5e4f42;
-      margin: 0 auto;
-    }
-    .paragraph {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 4;
-      overflow: hidden;
+    .blue {
+      background-color: #2a4cf6;
+      color: rgb(255, 255, 255);
     }
   }
+}
+.posts-container {
+  width: 100%;
 }

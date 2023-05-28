@@ -1,11 +1,15 @@
 .navigation {
   display: flex;
+  width: 100%;
   justify-content: center;
+  margin: 0 auto;
   border-bottom: 1px solid gray;
+
   .navigation-container {
-    width: 1300px;
     height: 70px;
     display: flex;
+    width: 100%;
+    max-width: 1300px;
     justify-content: space-between;
     align-items: center;
     margin-right: 20px;
@@ -16,17 +20,106 @@
       padding: 10px;
     }
 
-    p {
-      font-size: 2rem;
-      font-weight: 700;
-    }
     .navlinks-container {
       display: flex;
-      gap: 24px;
+      width: 100%;
+      justify-content: flex-end;
+      align-items: center;
+
       a {
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 0;
+        margin: 0 1rem;
       }
     }
   }
 }
+
+// .sign-up-link {
+//   border: 1px solid #2a4cf6;
+//   border-radius: 5px;
+//   color: #2a4cf6 !important;
+//   padding: 5px 10px !important;
+
+//   &:hover {
+//     background-color: #3b49df;
+//     color: white !important;
+//   }
+//   &:active {
+//     color: white;
+//   }
+// }
+.nav-link {
+  position: relative;
+  color: #000; // Replace with your default link color
+
+  &.sign-up-link {
+    border: 1px solid #2a4cf6;
+    border-radius: 5px;
+    color: #2a4cf6 !important;
+    padding: 5px 10px !important;
+    &:hover {
+      background-color: #3b49df !important;
+      color: white !important;
+    }
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: width 0.4s ease-in-out, left 0.4s ease-in-out,
+      background-color 0.4s ease-in-out;
+  }
+
+  &:hover:not(.sign-up-link)::after {
+    width: 100%;
+    left: 0;
+    background-color: #2a4cf6; // Replace with your hover border color
+    transition: width 0.4s ease-in-out, left 0.4s ease-in-out,
+      background-color 0.4s ease-in-out;
+  }
+
+  &.active:not(.sign-up-link) {
+    color: #2a4cf6; // Change the active link color to #2a4cf6
+  }
+
+  &.active:not(.sign-up-link)::after {
+    width: 100%;
+    left: 0;
+    background-color: #2a4cf6; // Change the active border color to #2a4cf6
+  }
+}
+
+@media (max-width: 615px) {
+  .navigation {
+    background-color: rgb(85, 25, 25);
+  }
+  .nav-link {
+    display: none;
+  }
+}
+
+// .hamburger-menu {
+//   display: none;
+// }
+
+// @media (max-width: 615px) {
+//   .navigation {
+//     background-color: rgb(85, 25, 25);
+//   }
+//   .nav-link {
+//     display: flex;
+//     flex-direction: column;
+//   }
+//   .hamburger-menu {
+//     font-size: 24px;
+//     color: white;
+//     cursor: pointer;
+//     display: block;
+//   }
+// }

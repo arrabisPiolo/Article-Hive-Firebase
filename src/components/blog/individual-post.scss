@@ -1,0 +1,14 @@
+$border-gray: #bfbfbf;
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 800px;
+  .post {
+    width: 100%;
+  }
+}

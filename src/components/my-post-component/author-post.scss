@@ -1,0 +1,114 @@
+$border-gray: #bfbfbf;
+
+.author-post-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+
+  .black-container {
+    width: 100vw;
+    height: 300px; /* Adjust the height as needed */
+    background: linear-gradient(to bottom, black 50%, #f5f5f5 50%);
+    position: relative;
+  }
+  .author-profile-container {
+    position: absolute; /* Add relative positioning */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 20px 0 rgba(0, 0, 0, 0.19);
+    top: 60px;
+    left: 50%;
+    border-radius: 10px;
+    background-color: white;
+    transform: translate(-50%);
+  }
+
+  .author-profile {
+    position: absolute; /* Add absolute positioning */
+    top: -50px; /* Adjust the distance from the top border as needed */
+    border-radius: 50%;
+    border: 5px solid black;
+    width: 110px;
+  }
+  .post {
+    border: 1px solid $border-gray;
+    border-radius: 5px;
+    margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+
+    .img-header {
+      width: 100%;
+      border-radius: 5px 5px 0px 0px;
+      height: 200px;
+      object-fit: fill;
+      cursor: pointer;
+    }
+
+    .bottom {
+      width: 100%;
+      padding: 10px;
+      display: flex;
+      .profile1 {
+        width: 40px;
+        border-radius: 50%;
+      }
+
+      .article-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 0px 10px;
+        display: flex;
+        .author1 {
+          display: block;
+          font-weight: bold;
+        }
+        .time-stamp {
+          line-height: 1;
+          .time-elapsed {
+            color: gray;
+            font-size: 0.9rem;
+          }
+          .middle-dot {
+            font-size: 2rem;
+            margin: 0 5px;
+            vertical-align: middle;
+          }
+        }
+
+        .content-container {
+          border-radius: 5px;
+          border: 1px solid $border-gray;
+          height: 100%;
+          width: 100%;
+
+          .title {
+            cursor: pointer;
+            &:hover {
+              color: blue;
+            }
+          }
+          .content {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

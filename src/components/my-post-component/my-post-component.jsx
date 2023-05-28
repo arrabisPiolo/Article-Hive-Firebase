@@ -1,28 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { ContentContext } from "../context/content.context";
-import { useNavigate } from "react-router-dom";
-import SearchBar from "./search-bar";
+import { UserContext } from "../context/user.context";
+import { GetDataArray } from "../../utils/firebase/firebase.utils";
+
 import "./author-post.scss";
 
-const AuthorPosts = () => {
-  const { authoruid } = useParams(); // retrieve post id from URL parameter
-  const { contents } = useContext(ContentContext);
-  const [matchingPosts, setMatchingPosts] = useState([]); // State to store matching posts
-  const [searchField, setSearchField] = useState("");
+const MyPostComponent = () => {
+  const { contents, setContents } = useContext(ContentContext);
+  const { currentUser } = useContext(UserContext);
+  const [matchingPosts, setMatchingPosts] = useState([]);
   const [filteredMatchingPosts, setFilteredMatchingPosts] = useState([]);
-  const navigate = useNavigate();
-  useEffect(() => {
-    const filteredPosts = contents.filter(
-      (post) => post.authoruid === authoruid
-    );
-    setMatchingPosts(filteredPosts);
-    setFilteredMatchingPosts(filteredPosts);
-  }, [contents, authoruid]);
 
-  if (matchingPosts.length === 0) {
-    return <div>No posts found with the specified postId</div>;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const dataArray = await GetDataArray();
+      setContents(dataArray);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      const filteredPosts = contents.filter(
+        (post) => post.authoruid === currentUser.uid
+      );
+      setMatchingPosts(filteredPosts);
+      setFilteredMatchingPosts(filteredPosts);
+    }
+  }, [contents, currentUser]);
 
   const handleSearch = () => {
     const searchFieldValue = searchField.toLowerCase();
@@ -70,25 +75,17 @@ const AuthorPosts = () => {
     }
   };
   const sortedDataArray = filteredMatchingPosts.sort((a, b) => b.id - a.id);
-
+  console.log(currentUser);
   return (
     <div className="author-post-container">
-      <div className="black-container">
-        <div className="author-profile-container">
-          <img
-            className="author-profile"
-            src={matchingPosts[0].photoURL}
-            alt=""
-          />
-          <h3>{matchingPosts[0].author}</h3>
+      {currentUser && (
+        <div className="black-container">
+          <div className="author-profile-container">
+            <img className="author-profile" src={currentUser.photoURL} alt="" />
+            <h3>{currentUser.displayName}</h3>
+          </div>
         </div>
-      </div>
-      <SearchBar
-        searchField={searchField}
-        setSearchField={setSearchField}
-        handleSearch={handleSearch}
-      />
-
+      )}
       {filteredMatchingPosts.length === 0 ? (
         <div className="no-post">No posts found</div>
       ) : (
@@ -155,4 +152,4 @@ const AuthorPosts = () => {
   );
 };
 
-export default AuthorPosts;
+export default MyPostComponent;
