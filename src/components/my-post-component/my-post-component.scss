@@ -11,7 +11,7 @@ $border-gray: #bfbfbf;
 
   .black-container {
     width: 100vw;
-    height: 300px; /* Adjust the height as needed */
+    height: 280px; /* Adjust the height as needed */
     background: linear-gradient(to bottom, black 50%, #f5f5f5 50%);
     position: relative;
   }
@@ -48,14 +48,19 @@ $border-gray: #bfbfbf;
     width: 100%;
     background-color: white;
 
-    .img-header {
+    .image-container {
+      margin: auto;
       width: 100%;
-      border-radius: 5px 5px 0px 0px;
       height: 200px;
-      object-fit: fill;
       cursor: pointer;
-    }
 
+      .img-header {
+        width: 100%;
+        border-radius: 5px 5px 0px 0px;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
     .bottom {
       width: 100%;
       padding: 10px;
@@ -90,7 +95,6 @@ $border-gray: #bfbfbf;
 
         .content-container {
           border-radius: 5px;
-          border: 1px solid $border-gray;
           height: 100%;
           width: 100%;
 
@@ -106,6 +110,60 @@ $border-gray: #bfbfbf;
             -webkit-line-clamp: 3;
             overflow: hidden;
             margin: 0;
+          }
+        }
+        .edit-delete-button-container {
+          margin-top: 10px;
+          display: flex;
+          align-self: self-end;
+          gap: 10px;
+
+          .my-post-btn {
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 2px;
+            position: relative;
+          }
+
+          .edit-button {
+            background-color: #218838;
+          }
+          .delete-button {
+            background-color: #c82333;
+          }
+          .tooltiptext {
+            visibility: hidden;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+          }
+          .triangle {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 12px solid #000;
+          }
+
+          .my-post-btn:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+          }
+          .my-post-btn:focus {
+            outline: none; /* Remove default focus outline */
           }
         }
       }

@@ -21,6 +21,7 @@ import {
   updateDoc,
   doc,
   arrayUnion,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const firebaseConfig = {
@@ -47,7 +48,7 @@ export const signInWithGitHubPopUp = async () => {
   const result = await signInWithPopup(auth, gitHubProvider);
   return result;
 };
-export const db = getFirestore();
+export const db = getFirestore(app);
 
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -57,8 +58,6 @@ export const createUserDocumentFromAuth = async (
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
-
-  console.log(userSnapshot.exists());
 
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
@@ -82,7 +81,8 @@ export const createUserDocumentFromAuth = async (
 export const createAuthUserWithEmailAndPassword = async (
   email,
   password,
-  displayName
+  displayName,
+  photoURL
 ) => {
   if (!email || !password) return;
 
@@ -93,7 +93,7 @@ export const createAuthUserWithEmailAndPassword = async (
   );
 
   // Set the display name for the user
-  await updateProfile(userCredential.user, { displayName });
+  await updateProfile(userCredential.user, { displayName, photoURL });
 
   return userCredential;
 };
@@ -109,25 +109,6 @@ export const signOutUser = async () => await signOut(auth);
 export const onAuthStateChangedListener = (callback) => {
   return onAuthStateChanged(auth, callback);
 };
-
-// export const SampleData = async (data) => {
-//   try {
-//     const docRef = await addDoc(collection(db, "posts"), data);
-//     console.log("Document written with ID: ", docRef.id);
-//   } catch (e) {
-//     console.error("Error adding document: ", e);
-//   }
-// };
-
-// export const SampleData = async (data) => {
-//   try {
-//     await setDoc(doc(db, "posts", "user1"), {
-//       dataArray: arrayUnion(data),
-//     });
-//   } catch (e) {
-//     console.error("Error adding document: ", e);
-//   }
-// };
 
 export const SampleData = async (userId, data) => {
   const postRef = doc(db, "posts", userId);
@@ -171,41 +152,57 @@ export const GetDataArray = async () => {
   return dataArray;
 };
 
-// export const SampleData = async (data) => {
-//   try {
-//     await updateDoc(doc(db, "posts", "user1"), {
-//       dataArray: arrayUnion(data),
-//     });
-//   } catch (e) {
-//     console.error("Error updating document: ", e);
-//   }
-// };
-
-// export const SampleData = async (data) => {
-//   const docRef = doc(db, "posts", "user1");
-//   const docSnap = await getDocs(docRef);
-
-//   if (docSnap.exists()) {
-//     try {
-//       await updateDoc(docRef, {
-//         dataArray: arrayUnion(data),
-//       });
-//     } catch (e) {
-//       console.error("Error updating document: ", e);
-//     }
-//   } else {
-//     try {
-//       await setDoc(docRef, {
-//         dataArray: arrayUnion(data),
-//       });
-//     } catch (e) {
-//       console.error("Error adding document: ", e);
-//     }
-//   }
-// };
-
 export const getDocsData = async () => {
   const querySnapshot = await getDocs(collection(db, "posts"));
   const data = querySnapshot.docs.map((doc) => doc.data());
   return data;
+};
+
+export const DeletePost = async (userId, postId) => {
+  const postRef = doc(db, "posts", userId);
+
+  try {
+    const postDoc = await getDoc(postRef);
+    const dataArray = postDoc.data().dataArray;
+    const postIndex = dataArray.findIndex((post) => post.id === postId);
+
+    if (postIndex !== -1) {
+      dataArray.splice(postIndex, 1);
+      await updateDoc(postRef, {
+        dataArray: dataArray,
+      });
+    }
+  } catch (error) {
+    console.error("Error deleting post:", error);
+  }
+};
+
+export const UpdatePost = async (userId, postId, updatedData) => {
+  const postRef = doc(db, "posts", userId);
+
+  try {
+    const postDoc = await getDoc(postRef);
+    const dataArray = postDoc.data().dataArray;
+
+    // Find the index of the post in the dataArray
+    const postIndex = dataArray.findIndex((post) => post.id === postId);
+
+    if (postIndex !== -1) {
+      // Update the post fields with the updatedData
+      const updatedPost = {
+        ...dataArray[postIndex],
+        ...updatedData,
+      };
+
+      // Update the post in the dataArray
+      dataArray[postIndex] = updatedPost;
+
+      // Update the document with the modified dataArray
+      await updateDoc(postRef, {
+        dataArray: dataArray,
+      });
+    }
+  } catch (error) {
+    console.error("Error updating post:", error);
+  }
 };

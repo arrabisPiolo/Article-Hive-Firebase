@@ -10,7 +10,6 @@ import logo1 from "../../assets/article-hive-logo1.png";
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInWithGitHubPopUp,
 } from "../../utils/firebase/firebase.utils";
 
@@ -34,10 +33,9 @@ const LogIn = () => {
 
   const signInWithProvider = async (signInFunction) => {
     try {
-      const { user } = await signInFunction();
-      await createUserDocumentFromAuth(user);
+      await signInFunction();
 
-      navigate("/");
+      navigate("/my-post");
       toast.success("Signed In Successfully");
     } catch (error) {
       toast.error("Error Signing In");
@@ -56,7 +54,7 @@ const LogIn = () => {
 
       resetFormFields();
       toast.success("Signed In Successfully");
-      navigate("/");
+      navigate("/my-post");
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":

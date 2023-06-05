@@ -54,9 +54,16 @@ const IndividualPost = () => {
     <>
       <div className="post-container">
         <div className="post">
-          {imageUrl && (
-            <img src={imageUrl} alt={title} className="img-header" />
-          )}
+          <div className="image-container">
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={title}
+                className="img-header"
+                href="#post1"
+              />
+            )}
+          </div>
           <div className="bottom">
             <div className="profile-pic-container">
               <img
@@ -81,8 +88,8 @@ const IndividualPost = () => {
                 </div>
               </div>
               <div className="content-container">
-                <h1 className="individual-title">{title}</h1>
-                <p className="individual-content">{content}</p>
+                <h1 className="title1">{title}</h1>
+                <p className="content1">{content}</p>
               </div>
             </div>
           </div>

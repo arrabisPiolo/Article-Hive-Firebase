@@ -1,51 +1,42 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ContentContext } from "../context/content.context";
 import { UserContext } from "../context/user.context";
-import { GetDataArray } from "../../utils/firebase/firebase.utils";
-
-import "./author-post.scss";
+import { DeletePost } from "../../utils/firebase/firebase.utils";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./my-post-component.scss";
+import { useNavigate } from "react-router-dom";
 
 const MyPostComponent = () => {
-  const { contents, setContents } = useContext(ContentContext);
+  const { contents } = useContext(ContentContext);
   const { currentUser } = useContext(UserContext);
-  const [matchingPosts, setMatchingPosts] = useState([]);
-  const [filteredMatchingPosts, setFilteredMatchingPosts] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const dataArray = await GetDataArray();
-      setContents(dataArray);
-    };
-    fetchData();
-  }, []);
+  const [filteredMatchingPosts, setFilteredMatchingPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (currentUser) {
       const filteredPosts = contents.filter(
         (post) => post.authoruid === currentUser.uid
       );
-      setMatchingPosts(filteredPosts);
+
       setFilteredMatchingPosts(filteredPosts);
     }
   }, [contents, currentUser]);
 
-  const handleSearch = () => {
-    const searchFieldValue = searchField.toLowerCase();
-    if (searchFieldValue === "") {
-      setFilteredMatchingPosts(matchingPosts);
-    } else {
-      const filteredArray = matchingPosts.filter((item) =>
-        item.title.toLowerCase().includes(searchFieldValue)
-      );
-      if (searchFieldValue.trim() === "") {
-        alert("Please enter a search term");
-      } else if (filteredArray.length === 0) {
-        alert("No results found for the search term");
-      } else {
-        alert(`Found ${filteredArray.length} result(s) for the search term`);
-      }
-      setFilteredMatchingPosts(filteredArray);
+  const handleDelete = async (authoruid, postId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (confirmDelete) {
+      // Delete the post from Firebase
+      await DeletePost(authoruid, postId);
+      window.location.reload(); // Reload the page
+      toast.error("Deletion complete. The post has been successfully removed.");
     }
+  };
+  const handleEdit = (postId) => {
+    navigate(`/edit-post/${postId}`);
   };
 
   const getTimeElapsed = (createdAt) => {
@@ -94,6 +85,7 @@ const MyPostComponent = () => {
             {sortedDataArray.map(
               ({
                 id,
+                authoruid,
                 photoURL,
                 author,
                 title,
@@ -104,15 +96,17 @@ const MyPostComponent = () => {
               }) => (
                 <li key={id}>
                   <div className="post" id="post1">
-                    {imageUrl && (
-                      <img
-                        src={imageUrl}
-                        alt={title}
-                        className="img-header"
-                        href="#post1"
-                        onClick={() => navigate(`/post/${id}`)}
-                      />
-                    )}
+                    <div className="image-container">
+                      {imageUrl && (
+                        <img
+                          src={imageUrl}
+                          alt={title}
+                          className="img-header"
+                          href="#post1"
+                          onClick={() => navigate(`/post/${id}`)}
+                        />
+                      )}
+                    </div>
                     <div className="bottom">
                       <div className="profile-pic-container">
                         <img className="profile1" src={photoURL} alt={author} />
@@ -138,6 +132,29 @@ const MyPostComponent = () => {
                             {title}
                           </h1>
                           <p className="content">{content}</p>
+                        </div>
+
+                        <div className="edit-delete-button-container">
+                          <button
+                            className="my-post-btn edit-button"
+                            onClick={() => handleEdit(id)}
+                            title="Edit"
+                          >
+                            <i className="fas fa-edit"></i>
+                            <span className="tooltiptext">
+                              Edit <span className="triangle"></span>
+                            </span>
+                          </button>
+                          <button
+                            className="my-post-btn delete-button"
+                            onClick={() => handleDelete(authoruid, id)}
+                            title="delete"
+                          >
+                            <i className="fas fa-trash"></i>
+                            <span className="tooltiptext">
+                              Delete <span className="triangle"></span>
+                            </span>
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
+import { ContentContext } from "../context/content.context";
 import * as Yup from "yup";
 import { UserContext } from "../context/user.context";
-import { useNavigate } from "react-router-dom";
-import { SampleData } from "../../utils/firebase/firebase.utils";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { UpdatePost } from "../../utils/firebase/firebase.utils";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useDropzone } from "react-dropzone";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import "./create-post-form.styles.scss";
 
 const validationSchema = Yup.object({
@@ -17,21 +15,22 @@ const validationSchema = Yup.object({
     .min(20, "Content must be at least 20 characters long"),
 });
 
-const CreatePostForm = () => {
+const EditPostForm = () => {
   const { currentUser } = useContext(UserContext);
+  const { contents } = useContext(ContentContext);
   const [postText, setPostText] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [imageFile, setImageFile] = useState(null);
-
-  const [imagePreview, setImagePreview] = useState(null); // added state for image preview
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
+  const { postId } = useParams();
+  const post = contents.find((post) => post.id === parseInt(postId)); // find post with matching id
 
   useEffect(() => {
-    if (!currentUser) {
-      // User is not logged in, redirect to login page or another appropriate page
-      navigate("/log-in");
-    }
-  }, [currentUser, navigate]);
+    setPostTitle(post.title);
+    setPostText(post.content);
+    setImagePreview(post.imageUrl);
+  }, [post]);
 
   const textareaRef = useRef(null); // Ref to access the textarea element
 
@@ -64,11 +63,6 @@ const CreatePostForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (postText.length < 20) {
-      alert("Content must be at least 20 characters long");
-      return;
-    }
-
     try {
       await validationSchema.validate({ title: postTitle, content: postText });
 
@@ -86,46 +80,25 @@ const CreatePostForm = () => {
         imageUrl = await getDownloadURL(storageRef);
       }
 
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      });
-
-      const createdAt = currentDate.getTime(); // Current timestamp in milliseconds
-
-      // Creating a new post
-      const newPost = {
-        id: Date.now() + 1,
+      const updatedData = {
         title: postTitle,
-        author: currentUser.displayName,
-        photoURL: currentUser.photoURL,
         content: postText,
-        authoruid: currentUser.uid,
-        imageUrl,
-        createdAt: createdAt,
-        formattedDate: formattedDate,
+        imageUrl: imageUrl ? imageUrl : post.imageUrl,
       };
 
-      setPostText("");
-      setPostTitle("");
-      setImageFile(null);
-      setImagePreview(null);
-      navigate("/");
-
-      SampleData(currentUser.uid, newPost);
-      toast.success("Your article has been published.");
+      await UpdatePost(currentUser.uid, post.id, updatedData);
+      navigate("/my-post");
+      window.location.reload(); // Reload the page
     } catch (error) {
       // Validation failed, display the validation error message
       console.error(error.message);
     }
   };
+
   const handleImageDrop = (acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const selectedFile = acceptedFiles[0];
       setImageFile(selectedFile);
-
       const objectUrl = URL.createObjectURL(selectedFile);
       setImagePreview(objectUrl);
     }
@@ -162,32 +135,26 @@ const CreatePostForm = () => {
           className="title-field"
           type="text"
           required
-          placeholder="New Post Title Here..."
+          placeholder="Title"
           value={postTitle}
           minLength={5}
-          maxLength={100}
+          maxLength={50}
           onChange={(event) => setPostTitle(event.target.value)}
           ref={textareaRef}
         />
         <textarea
           className="content-field"
           required
-          placeholder="Write your post here..."
           value={postText}
           onChange={(event) => setPostText(event.target.value)}
-          ref={textareaRef} // Add the ref to the textarea element
+          ref={textareaRef}
         />
-        <div className="publish-cancel-container">
-          <button className="btn-publish" type="submit">
-            Publish
-          </button>
-          <button className="btn-cancel" type="submit">
-            Cancel
-          </button>
-        </div>
+        <button className="btn-update" type="submit">
+          Update Post
+        </button>
       </form>
     </div>
   );
 };
 
-export default CreatePostForm;
+export default EditPostForm;

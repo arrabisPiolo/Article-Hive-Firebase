@@ -29,6 +29,7 @@
     .beehive {
       width: 200px;
       height: auto;
+      overflow: hidden;
     }
     a {
       margin-left: 8px;
@@ -49,5 +50,12 @@
         background: #878484;
       }
     }
+  }
+}
+
+@media all and (max-width: 768px) {
+  .login-container {
+    display: flex;
+    flex-direction: column;
   }
 }

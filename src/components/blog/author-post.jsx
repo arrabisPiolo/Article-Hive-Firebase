@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ContentContext } from "../context/content.context";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./search-bar";
+
 import "./author-post.scss";
 
 const AuthorPosts = () => {
@@ -11,6 +12,7 @@ const AuthorPosts = () => {
   const [matchingPosts, setMatchingPosts] = useState([]); // State to store matching posts
   const [searchField, setSearchField] = useState("");
   const [filteredMatchingPosts, setFilteredMatchingPosts] = useState([]);
+
   const navigate = useNavigate();
   useEffect(() => {
     const filteredPosts = contents.filter(
@@ -87,6 +89,7 @@ const AuthorPosts = () => {
         searchField={searchField}
         setSearchField={setSearchField}
         handleSearch={handleSearch}
+        placeholder={"Search by content..."}
       />
 
       {filteredMatchingPosts.length === 0 ? (
@@ -100,6 +103,7 @@ const AuthorPosts = () => {
                 photoURL,
                 author,
                 title,
+                authoruid,
                 content,
                 imageUrl,
                 createdAt,
@@ -107,15 +111,17 @@ const AuthorPosts = () => {
               }) => (
                 <li key={id}>
                   <div className="post" id="post1">
-                    {imageUrl && (
-                      <img
-                        src={imageUrl}
-                        alt={title}
-                        className="img-header"
-                        href="#post1"
-                        onClick={() => navigate(`/post/${id}`)}
-                      />
-                    )}
+                    <div className="image-container">
+                      {imageUrl && (
+                        <img
+                          src={imageUrl}
+                          alt={title}
+                          className="img-header"
+                          href="#post1"
+                          onClick={() => navigate(`/post/${id}`)}
+                        />
+                      )}
+                    </div>
                     <div className="bottom">
                       <div className="profile-pic-container">
                         <img className="profile1" src={photoURL} alt={author} />

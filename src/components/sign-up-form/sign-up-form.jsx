@@ -24,6 +24,8 @@ const SignUpform = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
   const navigate = useNavigate();
+
+  const photoURL = "/default-profile.png";
   const resetFeilds = () => {
     setFormFields(defaultFormFields);
   };
@@ -38,11 +40,12 @@ const SignUpform = () => {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password,
-        displayName
+        displayName,
+        photoURL
       );
 
       await createUserDocumentFromAuth(user, { displayName });
-      navigate("/");
+      navigate("/my-post");
       resetFeilds();
     } catch (error) {
       switch (error.code) {
@@ -60,10 +63,9 @@ const SignUpform = () => {
 
   const signInWithProvider = async (signInFunction) => {
     try {
-      const { user } = await signInFunction();
-      await createUserDocumentFromAuth(user);
+      await signInFunction();
 
-      navigate("/");
+      navigate("/my-post");
       toast.success("Signed In Successfully");
     } catch (error) {
       toast.error("Error Signing In");

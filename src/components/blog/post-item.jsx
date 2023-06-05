@@ -9,7 +9,6 @@ const PostItem = ({
   author,
   title,
   content,
-  imageUrl,
   createdAt,
   formattedDate,
 }) => {
@@ -44,15 +43,6 @@ const PostItem = ({
   return (
     <li key={id}>
       <div className="post" id="post1">
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            alt={title}
-            className="img-header"
-            href="#post1"
-            onClick={() => navigate(`/post/${id}`)}
-          />
-        )}
         <div className="bottom">
           <div className="profile-pic-container">
             <img
@@ -73,7 +63,7 @@ const PostItem = ({
               <div className="time-stamp">
                 <span className="time-elapsed">{getTimeElapsed()}</span>
                 <span className="middle-dot">&#xB7;</span>
-                <span className="formatted-date">{formattedDate}</span>
+                <span className="formatted-date">{`Posted on ${formattedDate}`}</span>
               </div>
             </div>
             <div className="content-container">

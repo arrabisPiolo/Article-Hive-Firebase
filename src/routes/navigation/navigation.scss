@@ -25,43 +25,25 @@
       width: 100%;
       justify-content: flex-end;
       align-items: center;
-
-      a {
-        font-size: 18px;
-        font-weight: 500;
-        padding: 0;
-        margin: 0 1rem;
-      }
     }
   }
 }
 
-// .sign-up-link {
-//   border: 1px solid #2a4cf6;
-//   border-radius: 5px;
-//   color: #2a4cf6 !important;
-//   padding: 5px 10px !important;
-
-//   &:hover {
-//     background-color: #3b49df;
-//     color: white !important;
-//   }
-//   &:active {
-//     color: white;
-//   }
-// }
 .nav-link {
   position: relative;
+  font-size: 18px;
+  margin: 0 1rem;
+  font-weight: 500;
   color: #000; // Replace with your default link color
-
-  &.sign-up-link {
+  &.sign-up-link,
+  &.create-post-link {
     border: 1px solid #2a4cf6;
     border-radius: 5px;
-    color: #2a4cf6 !important;
-    padding: 5px 10px !important;
+    color: #2a4cf6;
+    padding: 5px 10px;
     &:hover {
-      background-color: #3b49df !important;
-      color: white !important;
+      background-color: #3b49df;
+      color: white;
     }
   }
   &::after {
@@ -76,7 +58,7 @@
       background-color 0.4s ease-in-out;
   }
 
-  &:hover:not(.sign-up-link)::after {
+  &:hover:not(.sign-up-link, .create-post-link)::after {
     width: 100%;
     left: 0;
     background-color: #2a4cf6; // Replace with your hover border color
@@ -84,42 +66,52 @@
       background-color 0.4s ease-in-out;
   }
 
-  &.active:not(.sign-up-link) {
+  &.active:not(.sign-up-link, .create-post-link) {
     color: #2a4cf6; // Change the active link color to #2a4cf6
   }
 
-  &.active:not(.sign-up-link)::after {
+  &.active:not(.sign-up-link, .create-post-link)::after {
     width: 100%;
     left: 0;
     background-color: #2a4cf6; // Change the active border color to #2a4cf6
   }
 }
 
-@media (max-width: 615px) {
-  .navigation {
-    background-color: rgb(85, 25, 25);
-  }
-  .nav-link {
-    display: none;
-  }
+.burger-menu {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
 }
 
-// .hamburger-menu {
-//   display: none;
-// }
+@media all and (max-width: 777px) {
+  .burger-menu {
+    display: block;
+    z-index: 120;
+  }
+  .navlinks-container {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    justify-content: center !important;
+    position: fixed; /* Updated to "fixed" */
+    top: 0px; /* Adjust the top value based on your header height */
+    left: 0; /* Updated to "left" */
+    right: 0; /* Added "right" */
+    bottom: 0; /* Added "bottom" */
+    z-index: 100;
+    padding: 0px;
+    transform: translateX(100%); /* Updated the translate value */
+  }
 
-// @media (max-width: 615px) {
-//   .navigation {
-//     background-color: rgb(85, 25, 25);
-//   }
-//   .nav-link {
-//     display: flex;
-//     flex-direction: column;
-//   }
-//   .hamburger-menu {
-//     font-size: 24px;
-//     color: white;
-//     cursor: pointer;
-//     display: block;
-//   }
-// }
+  .nav-link,
+  .sign-up-link,
+  .create-post-link {
+    all: unset !important;
+    color: white !important;
+    width: 100% !important;
+    padding: 20px !important;
+    font-size: 25px !important;
+  }
+}

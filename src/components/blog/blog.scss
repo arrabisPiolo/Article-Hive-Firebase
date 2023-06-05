@@ -1,13 +1,11 @@
 $border-gray: #bfbfbf;
 
 @mixin new-button {
-  height: auto;
   background-color: lightgrey;
   color: rgb(46, 46, 46);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  padding: 10px;
 }
 
 .blog-container {
@@ -16,28 +14,23 @@ $border-gray: #bfbfbf;
   justify-content: center;
   align-items: center;
   margin: 20px auto;
-  width: 100%;
+  width: 95%;
   max-width: 800px;
-  .header {
+  .search-create {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
-    border-bottom: 1px solid gray;
-    .create-post {
-      @include new-button;
-      width: 130px;
-      i {
-        margin-right: 5px;
-      }
-    }
-    .blue {
-      background-color: #2a4cf6;
-      color: rgb(255, 255, 255);
-    }
+    gap: 10px;
+  }
+  .create-post {
+    @include new-button;
+    width: 150px;
+
+    height: 40px;
   }
 }
+
 .posts-container {
   width: 100%;
 }

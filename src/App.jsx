@@ -9,6 +9,8 @@ import SignUp from "./routes/sign-up/sign-up";
 import LogIn from "./routes/log-in/log-in";
 import MyPost from "./routes/my-post/my-post";
 import AuthorPosts from "./components/blog/author-post";
+import EditPostForm from "./components/blog/edit-post-form";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,6 +27,7 @@ const App = () => {
           <Route path="sign-up" element={<SignUp />} />
           <Route path="my-post" element={<MyPost />} />
           <Route path="create-post" element={<CreatePostForm />} />
+          <Route path="/edit-post/:postId" element={<EditPostForm />} />
           <Route path="/post/:postId" element={<IndividualPost />} />
           <Route path="/author/:authoruid" element={<AuthorPosts />} />
         </Route>
