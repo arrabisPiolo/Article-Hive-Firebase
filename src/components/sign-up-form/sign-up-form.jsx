@@ -106,6 +106,7 @@ const SignUpform = () => {
               name: "email",
               value: email,
               onChange: handleChange,
+              autoComplete: "email",
             }}
           />
 
@@ -117,6 +118,7 @@ const SignUpform = () => {
               name: "password",
               value: password,
               onChange: handleChange,
+              autoComplete: "new-password",
             }}
           />
 
@@ -128,6 +130,7 @@ const SignUpform = () => {
               name: "confirmPassword",
               value: confirmPassword,
               onChange: handleChange,
+              autoComplete: "new-password",
             }}
           />
           <button className="sign-up-btn" type="submit">

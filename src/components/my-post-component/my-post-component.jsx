@@ -66,7 +66,7 @@ const MyPostComponent = () => {
     }
   };
   const sortedDataArray = filteredMatchingPosts.sort((a, b) => b.id - a.id);
-  console.log(currentUser);
+
   return (
     <div className="author-post-container">
       {currentUser && (

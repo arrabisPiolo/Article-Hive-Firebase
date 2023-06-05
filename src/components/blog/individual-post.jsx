@@ -8,7 +8,7 @@ const IndividualPost = () => {
   const { contents } = useContext(ContentContext);
   const post = contents.find((post) => post.id === parseInt(postId)); // find post with matching id
   const navigate = useNavigate();
-  console.log(contents);
+
   if (!post) {
     return <div>Post not found</div>; // handle case where post is not found
   }

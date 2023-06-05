@@ -95,6 +95,7 @@ const LogIn = () => {
               name: "email",
               value: email,
               onChange: handleChange,
+              autoComplete: "email",
             }}
           />
 
@@ -106,6 +107,7 @@ const LogIn = () => {
               name: "password",
               value: password,
               onChange: handleChange,
+              autoComplete: "current-password",
             }}
           />
           <button className="signin-btn" type="submit">
