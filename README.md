@@ -1,13 +1,14 @@
-<div align='center'><img style="width:16%" src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/95bb6f57-73c9-476a-aed3-949449308fbe'/></div>
+<div align='center'><img style="width:100%" src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/95bb6f57-73c9-476a-aed3-949449308fbe'/></div>
 
 <h2>Project Overview</h2>
 
 
-<p><b>Coindom</b> Article Hive is an online platform created for developers and technologists. It serves as a hub for developers collaborate and share knowledge on a wide range of programming, technology, and software development topics. <br/>
+<p><b>Article Hive</b> is an online platform created for developers and technologists. It serves as a hub for developers collaborate and share knowledge on a wide range of programming, technology, and software development topics. <br/>
 </p>
 
 <h2>Key Features</h2>
-<p>1. User Registration and Authentication: Our website offers a secure and personalized experience through user registration and authentication. Users can create accounts and log in to access additional features and functionalities.
+<p>
+ 1. User Registration and Authentication: Our website offers a secure and personalized experience through user registration and authentication. Users can create accounts and log in to access additional features and functionalities.
 
 2. Article Posting: Authenticated users have the ability to create, edit, and delete articles. This empowers them to share their knowledge, insights, and experiences with the technology community.
 
@@ -32,14 +33,36 @@
 <h3 align='center'>Home Page 🏡</h3>
 
 <div align='center'>
-<img src='https://github.com/arrabisPiolo/TraCoin/assets/101545333/d5e15efa-324d-4891-8204-22b2c389e561.jpg'/>
-
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/5de0dbf3-aee9-4a5e-b246-abfe7402185c'/>
 
 
 <br><br>
 
-<h3 align='center'>Coin Page 🪙</h3>
+<h3 align='center'>View Post 🪧</h3>
 
 <div align='center'>
-<img src='https://github.com/arrabisPiolo/TraCoin/assets/101545333/e8664f49-743d-49d3-8d59-ae33f68abc51.jpg'/>
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/5eeda8d0-884e-4e57-9501-9d873bd2ba81'/>
 </div>
+  <h3 align='center'>Author Post 🪧</h3>
+
+<div align='center'>
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/57677571-0ce4-4689-8434-7a3c9fed92f1'/>
+</div>
+  <h3 align='center'>Create Post 👉</h3>
+
+<div align='center'>
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/97172ce7-b823-4465-9ad6-7af22d7d3a91'/>
+</div>
+  <h3 align='center'>Log-in Page ➡️</h3>
+
+<div align='center'>
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/2b9d348c-7529-4f5d-b1f8-8360295bae74'/>
+</div>
+
+  </div>
+  <h3 align='center'>Sign-up Page ➡️</h3>
+
+<div align='center'>
+<img src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/bb0a1830-f526-4fdf-b764-4d4324ab2fdb'/>
+</div>
+
