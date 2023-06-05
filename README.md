@@ -1,4 +1,4 @@
-<div align='center'><img style="width:100%" src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/95bb6f57-73c9-476a-aed3-949449308fbe'/></div>
+<div align='center'><img style="width:100%" src='https://github.com/arrabisPiolo/Article-Hive-Firebase/assets/101545333/0448f7df-1924-4dd8-91f3-67a82f1de7c6'/></div>
 
 <h2>Project Overview</h2>
 
@@ -7,17 +7,17 @@
 </p>
 
 <h2>Key Features</h2>
-<p>
- 1. User Registration and Authentication: Our website offers a secure and personalized experience through user registration and authentication. Users can create accounts and log in to access additional features and functionalities.
 
-2. Article Posting: Authenticated users have the ability to create, edit, and delete articles. This empowers them to share their knowledge, insights, and experiences with the technology community.
+1. **User Registration and Authentication:** Our website offers a secure and personalized experience through user registration and authentication. Users can create accounts and log in to access additional features and functionalities.
 
-3. Article Search: Finding relevant information is made easy with our article search functionality. Users can search for articles based on keywords or specific technology topics, allowing them to explore and discover content that matches their interests.
+2. **Article Posting:** Authenticated users have the ability to create, edit, and delete articles. This empowers them to share their knowledge, insights, and experiences with the technology community.
 
-4. User-Friendly Interface: We believe in providing an intuitive and user-friendly interface. Our website has been designed to ensure a smooth and enjoyable experience for users as they navigate through articles, manage their own posts, and interact with other community members.
+3. **Article Search:** Finding relevant information is made easy with our article search functionality. Users can search for articles based on keywords or specific technology topics, allowing them to explore and discover content that matches their interests.
 
-5. CRUD Operations: We empower users with full control over their articles. Through Create, Read, Update, and Delete operations, users can manage their content, ensuring accuracy and relevance over time.
-</p>
+4. **User-Friendly Interface:** We believe in providing an intuitive and user-friendly interface. Our website has been designed to ensure a smooth and enjoyable experience for users as they navigate through articles, manage their own posts, and interact with other community members.
+
+5. **CRUD Operations:** We empower users with full control over their articles. Through Create, Read, Update, and Delete operations, users can manage their content, ensuring accuracy and relevance over time.
+
 <p>We invite you to explore, learn, and contribute to the wealth of information available on our platform.</p>
 👉 Live Demo: <a href='https://article-hive.vercel.app/'>Article Hive Demo</a>
 
