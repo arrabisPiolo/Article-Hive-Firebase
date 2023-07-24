@@ -61,19 +61,19 @@
   &:hover:not(.sign-up-link, .create-post-link)::after {
     width: 100%;
     left: 0;
-    background-color: #2a4cf6; // Replace with your hover border color
+    background-color: #2a4cf6;
     transition: width 0.4s ease-in-out, left 0.4s ease-in-out,
       background-color 0.4s ease-in-out;
   }
 
   &.active:not(.sign-up-link, .create-post-link) {
-    color: #2a4cf6; // Change the active link color to #2a4cf6
+    color: #2a4cf6;
   }
 
   &.active:not(.sign-up-link, .create-post-link)::after {
     width: 100%;
     left: 0;
-    background-color: #2a4cf6; // Change the active border color to #2a4cf6
+    background-color: #2a4cf6;
   }
 }
 
