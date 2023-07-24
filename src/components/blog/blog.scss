@@ -26,8 +26,8 @@ $border-gray: #bfbfbf;
   .create-post {
     @include new-button;
     width: 150px;
-
     height: 40px;
+    white-space: nowrap;
   }
 }
 
