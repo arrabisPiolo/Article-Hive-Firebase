@@ -136,6 +136,10 @@ const CreatePostForm = () => {
     onDrop: handleImageDrop,
   });
 
+  const handleCancelClick = () => {
+    navigate("/");
+  };
+
   return (
     <div className="form-container">
       <form className="form" onSubmit={handleSubmit}>
@@ -181,7 +185,11 @@ const CreatePostForm = () => {
           <button className="btn-publish" type="submit">
             Publish
           </button>
-          <button className="btn-cancel" type="submit">
+          <button
+            className="btn-cancel"
+            onClick={handleCancelClick}
+            type="button"
+          >
             Cancel
           </button>
         </div>
