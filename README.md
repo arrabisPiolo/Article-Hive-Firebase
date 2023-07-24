@@ -23,8 +23,15 @@
 
 <h3>Build with:</h3>
 
-» React JS <br>
-» SCSS  <br>
+Technologies that I used to develop this app
+
+- [ReactJS](https://reactjs.org)
+- [Sass](https://sass-lang.com/)
+- [React Router](https://github.com/ReactTraining/react-router)
+- [Firebase](https://firebase.google.com/)
+- [React Dropzone](https://react-dropzone.js.org/)
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
+
 
 <br>
 
